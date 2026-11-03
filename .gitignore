@@ -1,0 +1,18 @@
+# Python and local operating-system artifacts
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+coverage.xml
+
+# Never commit credentials or local environment configuration
+.env
+.env.*
+!.env.example
+
+# Local A2A rehearsal output
+*.a2a.log
+
+# Account-bound AgentCore deployment source, generated CDK state, logs, and assets.
+# These stay local; publish sanitized templates separately if needed.
+deployments/

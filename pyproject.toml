@@ -1,0 +1,21 @@
+[project]
+name = "opn408-a2a-code-talk"
+version = "0.1.0"
+description = "A teaching-first Strands and LangGraph A2A Code Talk sample."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "a2a-sdk==0.3.26",
+  "boto3==1.43.104",
+  "httpx==0.28.1",
+  "langgraph==1.2.12",
+  "starlette==1.8.0",
+  "strands-agents[a2a]==1.57.1",
+  "uvicorn==0.54.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.unittest]
+start-directory = "tests"
