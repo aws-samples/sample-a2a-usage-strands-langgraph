@@ -1,6 +1,6 @@
 # Account-free AgentCore deployment templates
 
-This directory provides **source templates**, not a ready-to-push deployment state. It contains no AWS account IDs, runtime ARNs, credentials, or deployment logs.
+This directory provides **source templates**, not a ready-to-push deployment state. 
 
 ## What the templates demonstrate
 
