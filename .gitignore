@@ -19,3 +19,6 @@ deployments/
 
 # Locally generated handoff bundle
 opn408-a2a-code-talk-bundle.zip
+
+# Optional local presentation materials
+presentation/
