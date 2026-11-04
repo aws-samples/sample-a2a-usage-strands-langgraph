@@ -1,14 +1,14 @@
-"""Agent 2: the Strands A2A specialist used in the OPN408 Code Talk.
+"""Strands A2A specialist used in the local cross-framework example.
 
 Two intentional modes exist:
 
 * rehearsal (default): deterministic A2A lifecycle. It proves AgentCard discovery,
   task state updates, input-required, task resumption, and streamed artifacts.
 * bedrock: real Strands + global Claude Sonnet 4.6. It is optional local practice
-  and can call the static re:Invent session-search tool.
+  and can call the static sample-catalog search tool.
 
 The local server binds only to 127.0.0.1. It is never the shared/public demo
-endpoint; AgentCore Runtime provides the managed authenticated version.
+endpoint; a managed runtime provides the authenticated version when deployed.
 """
 
 from __future__ import annotations
@@ -29,13 +29,12 @@ from strands.models.bedrock import BedrockModel
 from strands.multiagent.a2a.executor import StrandsA2AExecutor
 
 try:
-    from .session_recommender_tool import recommend_reinvent_sessions
+    from .session_recommender_tool import recommend_catalog_items
 except ImportError:  # Supports direct `python talk/strands_analyst.py` execution.
-    from session_recommender_tool import recommend_reinvent_sessions
+    from session_recommender_tool import recommend_catalog_items
 
 
-# This is intentionally explicit in code: the local Bedrock option uses the
-# same globally routed model family described in the Code Talk, not a secret.
+# The optional local Bedrock path uses a public model identifier, not a secret.
 BEDROCK_MODEL_ID = "global.anthropic.claude-sonnet-4-6"
 ModelMode = Literal["rehearsal", "bedrock"]
 
@@ -48,16 +47,16 @@ def build_bedrock_strands_agent() -> Agent:
     agent's prompt, model, memory, or tools to LangGraph.
     """
     return Agent(
-        name="OPN408 Local Strands Specialist",
-        description="Architecture specialist for the OPN408 A2A Code Talk.",
+        name="Local Strands Specialist",
+        description="Architecture specialist for a cross-framework A2A example.",
         model=BedrockModel(model_id=BEDROCK_MODEL_ID, max_tokens=2048),
         system_prompt=(
             "You are an architecture specialist. Give concise, practical guidance for "
-            "agentic architectures. If the user asks for re:Invent session suggestions, "
-            "call recommend_reinvent_sessions first, then clearly say the static catalog "
-            "is an unofficial snapshot and scheduling details need official verification."
+            "agentic architectures. If the user asks for suggestions from the sample "
+            "catalog, call recommend_catalog_items first, then clearly say the catalog "
+            "contains synthetic example data."
         ),
-        tools=[recommend_reinvent_sessions],
+        tools=[recommend_catalog_items],
     )
 
 
@@ -101,8 +100,8 @@ class DeterministicA2AExecutor(AgentExecutor):
             parts=[
                 TextPart(
                     text=(
-                        "A compact session-guide service needs a curated catalog, metadata "
-                        "filters, and an A2A boundary between the coordinator and specialist."
+                        "A compact knowledge catalog needs metadata filters and an A2A "
+                        "boundary between the coordinator and specialist."
                     )
                 )
             ],
@@ -152,10 +151,10 @@ def build_app(port: int = 9000, model_mode: ModelMode = "rehearsal"):
         )
         skills = [
             AgentSkill(
-                id="recommend-reinvent-sessions",
-                name="Recommend re:Invent sessions",
-                description="Searches the static, curated re:Invent snapshot for relevant sessions.",
-                tags=["reinvent", "agentcore", "a2a", "strands"],
+                id="recommend-catalog-items",
+                name="Recommend catalog items",
+                description="Searches synthetic static catalog entries for items relevant to a question.",
+                tags=["catalog", "agent", "a2a", "strands"],
             )
         ]
     else:
@@ -163,17 +162,17 @@ def build_app(port: int = 9000, model_mode: ModelMode = "rehearsal"):
         executor = DeterministicA2AExecutor()
         skills = [
             AgentSkill(
-                id="design-session-guide-rag",
-                name="Design a session-guide architecture",
-                description="Requests the document profile and streams architecture decision artifacts.",
+                id="design-knowledge-catalog-architecture",
+                name="Design a knowledge catalog architecture",
+                description="Requests a document profile and streams architecture decision artifacts.",
                 tags=["a2a", "architecture", "teaching-demo"],
             )
         ]
 
     # The AgentCard is what LangGraph discovers. It exposes capability—not implementation.
     card = AgentCard(
-        name="Strands Session Guide Analyst",
-        description="A Strands specialist for the OPN408 cross-framework A2A demonstration.",
+        name="Strands A2A Specialist",
+        description="A Strands specialist in a cross-framework A2A example.",
         url=f"http://127.0.0.1:{port}",
         version="0.1.0",
         default_input_modes=["text/plain"],

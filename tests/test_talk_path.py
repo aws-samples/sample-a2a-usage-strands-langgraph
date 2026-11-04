@@ -15,9 +15,9 @@ class TalkPathTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         card = response.json()
-        self.assertEqual(card["name"], "Strands Session Guide Analyst")
+        self.assertEqual(card["name"], "Strands A2A Specialist")
         self.assertTrue(card["capabilities"]["streaming"])
-        self.assertEqual(card["skills"][0]["id"], "design-session-guide-rag")
+        self.assertEqual(card["skills"][0]["id"], "design-knowledge-catalog-architecture")
 
     def test_resumed_request_preserves_task_and_context_identity(self) -> None:
         request = streaming_request(PROFILE, task_id="task-1", context_id="context-1")

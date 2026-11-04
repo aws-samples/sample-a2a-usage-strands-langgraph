@@ -1,4 +1,4 @@
-"""Agent 1: the LangGraph A2A coordinator used in the OPN408 Code Talk.
+"""Local LangGraph A2A coordinator.
 
 Run this in terminal two after `strands_analyst.py` starts in terminal one.
 The workflow proves four A2A ideas in a readable order:
@@ -26,10 +26,10 @@ from a2a.types import AgentCard, Message, MessageSendParams, Role, SendStreaming
 from langgraph.graph import END, START, StateGraph
 
 
-DEFAULT_PROMPT = "Design a minimal re:Invent session-guide retrieval architecture."
+DEFAULT_PROMPT = "Design a document retrieval architecture for a curated knowledge catalog."
 DEFAULT_DOCUMENT_PROFILE = (
-    "Document profile: markdown session abstracts and JSON metadata; 120 curated records; "
-    "updated before rehearsals; complete title, abstract, level, track, and speaker metadata."
+    "Document profile: Markdown documents and JSON metadata; 120 curated records; "
+    "updated periodically; complete title, summary, category, and author metadata."
 )
 
 # Backward-compatible names used by the focused talk-path tests.

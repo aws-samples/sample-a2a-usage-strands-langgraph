@@ -1,8 +1,8 @@
-"""Invoke the deployed OPN408 LangGraph A2A runtime using AWS SigV4.
+"""Invoke a deployed LangGraph A2A runtime using AWS SigV4.
 
-Run from the repository root with AWS credentials for the demo account:
+Run from the repository root with AWS credentials configured for the target account:
 
-    uv run python talk/run_agentcore_demo.py
+    uv run python talk/run_agentcore_demo.py --runtime-prefix YOUR_RUNTIME_PREFIX
 
 The script discovers a caller-specified READY runtime by name prefix, sends an
 A2A JSON-RPC task through AgentCore Runtime, and prints the returned artifacts.
@@ -24,8 +24,8 @@ REGION = os.environ.get("AWS_REGION", "us-east-1")
 # The caller supplies the runtime prefix at invocation time; no account-specific
 # runtime name is baked into the public script.
 DEFAULT_PROMPT = (
-    "Design a minimal re:Invent session-guide retrieval service for 120 curated "
-    "session abstracts and metadata records. Explain the architecture and trade-offs."
+    "Design a document retrieval architecture for a curated knowledge catalog. "
+    "Explain the architecture and trade-offs."
 )
 
 
@@ -95,7 +95,7 @@ def main() -> None:
     parser.add_argument(
         "--prompt",
         default=DEFAULT_PROMPT,
-        help="Prompt sent as an A2A task to the deployed LangGraph runtime.",
+        help="Prompt sent as an A2A task to the deployed coordinator runtime.",
     )
     args = parser.parse_args()
     runtime_arn = resolve_runtime_arn(args.runtime_prefix)

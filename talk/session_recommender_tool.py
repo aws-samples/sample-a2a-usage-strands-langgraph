@@ -1,8 +1,7 @@
-"""Curated re:Invent 2026 session search for the OPN408 Strands agent.
+"""Synthetic sample-catalog search for the optional Strands tool example.
 
-This is intentionally a static, local JSON search rather than RAG. It gives the
-Code Talk a reliable, inspectable tool call; embeddings and semantic retrieval
-remain a future extension.
+This is a static local JSON search, not RAG. It demonstrates an inspectable tool
+call; embeddings and semantic retrieval are intentionally out of scope.
 """
 
 from __future__ import annotations
@@ -14,12 +13,12 @@ from typing import Any
 
 from strands import tool
 
-CATALOG_PATH = Path(__file__).with_name("reinvent-2026-curated-sessions.json")
+CATALOG_PATH = Path(__file__).with_name("sample-catalog.json")
 MAX_RESULTS = 5
 
 
 def load_catalog() -> dict[str, Any]:
-    """Load the versioned, static session snapshot shipped with the demo."""
+    """Load the synthetic static catalog shipped with this sample."""
     return json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
 
 
@@ -41,14 +40,13 @@ def _searchable_text(session: dict[str, Any]) -> str:
 
 
 def search_sessions(query: str, limit: int = MAX_RESULTS) -> list[dict[str, Any]]:
-    """Return deterministic, keyword-ranked session recommendations.
+    """Return deterministic keyword-ranked catalog entries.
 
-    Matching is deliberately transparent: title matches carry the highest weight,
-    then topics/services, then summary text. The function never contacts a live
-    catalog, so rehearsals remain stable and recommendation results are auditable.
+    Title matches have the highest weight, followed by topic/service matches and
+    then summary matches. The function never contacts a live service.
     """
     if not query.strip():
-        raise ValueError("A session recommendation query is required.")
+        raise ValueError("A catalog search query is required.")
     if not 1 <= limit <= MAX_RESULTS:
         raise ValueError(f"limit must be between 1 and {MAX_RESULTS}.")
 
@@ -68,38 +66,31 @@ def search_sessions(query: str, limit: int = MAX_RESULTS) -> list[dict[str, Any]
 
     return [
         session
-        for _, session in sorted(
-            ranked,
-            key=lambda item: (-item[0], item[1]["sessionId"]),
-        )[:limit]
+        for _, session in sorted(ranked, key=lambda item: (-item[0], item[1]["sessionId"]))[:limit]
     ]
 
 
 @tool
-def recommend_reinvent_sessions(query: str, limit: int = MAX_RESULTS) -> str:
-    """Recommend up to five curated re:Invent 2026 sessions for an architecture question.
-
-    Use this for questions about A2A, AgentCore, Strands, LangGraph, Bedrock,
-    RAG, retrieval, observability, MCP, agent security, or production deployment.
-    Explain that this is an unofficial static snapshot and attendees must verify
-    schedule details in the official event catalog.
-    """
+def recommend_catalog_items(query: str, limit: int = MAX_RESULTS) -> str:
+    """Search a synthetic catalog for items relevant to an architecture question."""
     catalog = load_catalog()
     sessions = search_sessions(query, limit)
-    result = {
-        "catalogSourceType": catalog["sourceType"],
-        "catalogDisclaimer": catalog["disclaimer"],
-        "query": query,
-        "recommendations": [
-            {
-                "sessionId": session["sessionId"],
-                "title": session["title"],
-                "summary": session["summary"],
-                "level": session["level"],
-                "type": session["type"],
-                "topics": session["topics"],
-            }
-            for session in sessions
-        ],
-    }
-    return json.dumps(result, ensure_ascii=False)
+    return json.dumps(
+        {
+            "catalogSourceType": catalog["sourceType"],
+            "catalogDisclaimer": catalog["disclaimer"],
+            "query": query,
+            "recommendations": [
+                {
+                    "sessionId": session["sessionId"],
+                    "title": session["title"],
+                    "summary": session["summary"],
+                    "level": session["level"],
+                    "type": session["type"],
+                    "topics": session["topics"],
+                }
+                for session in sessions
+            ],
+        },
+        ensure_ascii=False,
+    )

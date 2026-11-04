@@ -1,87 +1,109 @@
-# OPN408 — cross-framework A2A Code Talk
+# Cross-framework agent collaboration with A2A
 
-A small, teaching-first sample for **Connect agents across frameworks live using the A2A open protocol (OPN408)**.
+A reusable reference pattern for connecting a **LangGraph coordinator** to a **Strands specialist** through the [Agent2Agent (A2A) protocol](https://a2a-protocol.org/).
 
-## What this repository teaches
+The sample focuses on the collaboration boundary rather than framework internals. The two agents do not share prompts, tools, state, or source code. They collaborate through an AgentCard, task lifecycle events, a structured request for missing input, and named artifacts.
 
-A local LangGraph coordinator discovers a local Strands specialist through an A2A AgentCard, submits a task, receives `input-required`, resumes the **same task and context**, and renders named artifacts.
+## Architecture
 
 ```text
-LangGraph coordinator
-  └── AgentCard discovery
-      └── A2A task
-          └── input-required
-              └── same-task resumption
-                  └── artifacts + completed
-Strands specialist
+Caller
+  → LangGraph coordinator
+      → AgentCard discovery
+      → A2A task submission
+          → Strands specialist
+              → input-required
+              → streamed artifacts
+              → completed
 ```
 
-## The public teaching surface
+## What this sample demonstrates
 
-| File | Why it exists |
-|---|---|
-| `talk/strands_analyst.py` | Agent 2: loopback-only Strands A2A server. Defaults to deterministic rehearsal; optional local Sonnet 4.6 mode. |
-| `talk/langgraph_researcher.py` | Agent 1: compact LangGraph workflow for discovery, task submission, and continuation. |
-| `talk/session_recommender_tool.py` | Optional static-JSON Strands tool. It is an extension, not the core A2A lesson. |
-| `talk/reinvent-2026-curated-sessions.json` | Curated, paraphrased session snapshot for the optional recommendation tool. |
-| `talk/run_agentcore_demo.py` | Optional signed invocation script for a separately deployed AgentCore proof. |
-| `talk/presenter-guide.md` | Slide-by-slide talk track, Kiro checkpoints, commands, and recovery cues. |
-| `agentcore/` | Account-free AgentCore templates for the two managed runtimes. |
-| `talk/opn408-10-slide-storyboard.html` | Self-contained visual 10-slide storyboard. |
+- **Agent discovery** through a remote AgentCard.
+- **A2A task lifecycle**: submitted, working, `input-required`, and completed.
+- **Same-task continuation** using the original task and context IDs.
+- **Named artifacts** instead of a single opaque response.
+- **Framework independence**: LangGraph coordinates; Strands specializes.
+- **Two operating modes**: deterministic local rehearsal and optional Bedrock-backed Strands practice.
+- **Account-free AgentCore templates** for deploying the same pattern with `AWS_IAM` authentication.
 
-## Local rehearsal: deterministic A2A
+## Quick start
 
-Terminal 1 starts Agent 2:
+Prerequisites:
+
+- Python 3.13 or later
+- [uv](https://docs.astral.sh/uv/)
+
+Install dependencies:
 
 ```zsh
 uv sync
+```
+
+Start the Strands specialist in one terminal:
+
+```zsh
 uv run python talk/strands_analyst.py --model rehearsal
 ```
 
-Terminal 2 runs Agent 1:
+Run the LangGraph coordinator in another terminal:
 
 ```zsh
 uv run python talk/langgraph_researcher.py \
-  --prompt "Design a minimal session-guide retrieval architecture."
+  --prompt "Design a document retrieval architecture for a curated knowledge catalog."
 ```
 
-The default rehearsal requires no AWS credentials and emits visible state transitions:
+The terminal shows the protocol flow directly:
 
 ```text
-[discovery] AgentCard retrieved
-[task] submitted
-[state] working
+[discovery] fetching AgentCard
+[task] submitting A2A task
 [state] input-required
-[resume] document profile supplied
+[resume] sending document profile on the same task and context
 [artifact] architecture-rationale
 [artifact] cdk-guidance
 [artifact] decision-summary
 [state] completed
 ```
 
-## Optional local Claude Sonnet 4.6 path
+## Repository guide
 
-To use a real local Strands model, configure AWS credentials and Bedrock access, then run:
+| Path | Purpose |
+|---|---|
+| `talk/strands_analyst.py` | Strands A2A specialist. The default deterministic mode makes lifecycle behavior easy to inspect. |
+| `talk/langgraph_researcher.py` | LangGraph A2A coordinator for discovery, task submission, and continuation. |
+| `talk/session_recommender_tool.py` | Optional example of a normal Strands tool over static JSON. |
+| `talk/sample-catalog.json` | Synthetic example data for the optional catalog-search tool. |
+| `agentcore/` | Account-free templates for deploying a Strands specialist and LangGraph coordinator to AgentCore Runtime. |
+| `presentation/` | Optional presentation materials for explaining the pattern to an audience. |
+
+## Optional local Bedrock mode
+
+The local specialist can use Amazon Bedrock instead of deterministic rehearsal output:
 
 ```zsh
 uv run python talk/strands_analyst.py --model bedrock
 ```
 
-This mode uses `global.anthropic.claude-sonnet-4-6`. It can use the optional static session-recommendation tool. It remains loopback-only and may incur Bedrock inference charges.
+This mode uses `global.anthropic.claude-sonnet-4-6`, requires local AWS credentials and model access, and may incur inference charges.
 
-## Test
+## AgentCore deployment templates
+
+See [`agentcore/README.md`](agentcore/README.md) for account-free templates and deployment guidance. Deployers provide their own target account, Region, specialist runtime ARN, and least-privilege role policy locally.
+
+## Tests
 
 ```zsh
 uv run python -m unittest discover -s tests -v
 ```
 
-## Public-data note
+## Optional event-catalog example
 
-The session catalog is an unofficial public planner snapshot with paraphrased summaries. Verify schedule, capacity, venue, and availability in the official re:Invent catalog before making recommendations.
+The curated event catalog is an optional extension that demonstrates tool design over static data. It uses a public, unofficial source snapshot with paraphrased summaries. Verify any event details in the relevant official catalog before using them for scheduling.
 
 ## Security
 
-If you discover a potential security issue, please follow the process in [CONTRIBUTING.md](CONTRIBUTING.md#security-issue-notifications). Do not create a public issue for a potential vulnerability.
+If you discover a potential security issue, follow the process in [CONTRIBUTING.md](CONTRIBUTING.md#security-issue-notifications). Do not create a public issue for a potential vulnerability.
 
 ## License
 
