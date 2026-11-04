@@ -79,6 +79,10 @@ uv run python -m unittest discover -s tests -v
 
 The session catalog is an unofficial public planner snapshot with paraphrased summaries. Verify schedule, capacity, venue, and availability in the official re:Invent catalog before making recommendations.
 
+## Security
+
+If you discover a potential security issue, please follow the process in [CONTRIBUTING.md](CONTRIBUTING.md#security-issue-notifications). Do not create a public issue for a potential vulnerability.
+
 ## License
 
 This project is licensed under the [MIT-0 License](LICENSE).
