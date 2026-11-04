@@ -1,0 +1,9 @@
+# Account- and environment-specific AgentCore configuration
+**/agentcore/aws-targets.json
+**/agentcore/.env.local
+**/agentcore/.cli/
+**/agentcore/.cache/
+**/agentcore/cdk/node_modules/
+**/agentcore/cdk/dist/
+**/agentcore/cdk/cdk.out/
+**/.venv/

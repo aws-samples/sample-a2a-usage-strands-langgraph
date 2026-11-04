@@ -1,0 +1,8 @@
+[
+  {
+    "name": "default",
+    "description": "Replace with your non-production target",
+    "account": "REPLACE_WITH_12_DIGIT_ACCOUNT_ID",
+    "region": "us-east-1"
+  }
+]

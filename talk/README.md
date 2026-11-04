@@ -50,3 +50,8 @@ uv run python talk/run_agentcore_demo.py \
 ```
 
 Do not publish the local `deployments/` directory: it is intentionally Git-ignored because it contains account-bound deployment material.
+
+## Presenter materials
+
+* [Presenter guide](presenter-guide.md) — slide talk track, Kiro checkpoints, commands, and recovery cues.
+* [10-slide storyboard](opn408-10-slide-storyboard.html) — self-contained visual deck; open it in a browser or print to PDF.

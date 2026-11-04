@@ -16,3 +16,6 @@ coverage.xml
 # Account-bound AgentCore deployment source, generated CDK state, logs, and assets.
 # These stay local; publish sanitized templates separately if needed.
 deployments/
+
+# Locally generated handoff bundle
+opn408-a2a-code-talk-bundle.zip

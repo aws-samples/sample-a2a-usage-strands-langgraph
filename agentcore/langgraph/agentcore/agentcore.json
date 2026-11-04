@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "A2ALangGraphDemo",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "Sample": "cross-framework-a2a"
+  },
+  "runtimes": [
+    {
+      "name": "a2a_langgraph_coordinator",
+      "description": "LangGraph A2A coordinator template",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/a2a_langgraph_coordinator/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "A2A",
+      "authorizerType": "AWS_IAM"
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [],
+  "datasets": [],
+  "capacityProviders": [],
+  "payments": []
+}

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "a2a-langgraph-coordinator"
+version = "0.1.0"
+description = "Account-free LangGraph A2A coordinator template for AgentCore Runtime."
+requires-python = ">=3.10"
+dependencies = [
+  "a2a-sdk[http-server]>=1.0.1,<2.0.0",
+  "aws-opentelemetry-distro>=0.18.0",
+  "bedrock-agentcore[a2a-v1]>=1.19.0",
+  "boto3>=1.35.0",
+  "botocore[crt]>=1.35.0",
+  "langchain-aws>=0.2.0",
+  "langgraph>=0.2.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

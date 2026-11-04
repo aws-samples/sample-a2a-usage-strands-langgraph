@@ -25,8 +25,9 @@ Strands specialist
 | `talk/session_recommender_tool.py` | Optional static-JSON Strands tool. It is an extension, not the core A2A lesson. |
 | `talk/reinvent-2026-curated-sessions.json` | Curated, paraphrased session snapshot for the optional recommendation tool. |
 | `talk/run_agentcore_demo.py` | Optional signed invocation script for a separately deployed AgentCore proof. |
-
-The `deployments/` directory remains local-only and is ignored by Git because it contains account-bound AgentCore deployment state and configuration.
+| `talk/presenter-guide.md` | Slide-by-slide talk track, Kiro checkpoints, commands, and recovery cues. |
+| `agentcore/` | Account-free AgentCore templates for the two managed runtimes. |
+| `talk/opn408-10-slide-storyboard.html` | Self-contained visual 10-slide storyboard. |
 
 ## Local rehearsal: deterministic A2A
 
@@ -77,3 +78,7 @@ uv run python -m unittest discover -s tests -v
 ## Public-data note
 
 The session catalog is an unofficial public planner snapshot with paraphrased summaries. Verify schedule, capacity, venue, and availability in the official re:Invent catalog before making recommendations.
+
+## License
+
+This project is licensed under the [MIT-0 License](LICENSE).
