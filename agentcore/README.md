@@ -52,3 +52,7 @@ Copy `aws-targets.example.json` to `agentcore/aws-targets.json` in each generate
 ## Security boundary
 
 The runtime templates set `authorizerType` to `AWS_IAM`. AgentCore A2A runtimes serve inside the managed runtime environment; do not expose the local development server beyond loopback or replace the runtime's authentication boundary with a custom token scheme.
+
+## Runtime platform V2
+
+Use [`scripts/upgrade_agentcore_runtime_v2.py`](../scripts/upgrade_agentcore_runtime_v2.py) to create a reviewed, account-local V2 update plan. The script defaults to dry-run behavior: it snapshots the current runtime configuration and prints the exact `UpdateAgentRuntime` request with `platformVersion: V2`. Use `--apply` only after reviewing the snapshot and validating the runtime-specific update plan.

@@ -22,3 +22,6 @@ opn408-a2a-code-talk-bundle.zip
 
 # Optional local presentation materials
 presentation/
+
+# Local runtime V2 snapshots
+runtime-v2-*.json
