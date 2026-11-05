@@ -1,6 +1,11 @@
 # Cross-framework agent collaboration with A2A
 
+# Cross-framework agent collaboration with A2A
+
 A reusable reference pattern for connecting a **LangGraph coordinator** to a **Strands specialist** through the [Agent2Agent (A2A) protocol](https://a2a-protocol.org/).
+
+> [!WARNING]
+> **Not for production use.** This repository is an educational reference implementation. It intentionally prioritizes clear protocol behavior over production hardening. Do not deploy it unchanged for sensitive data, customer traffic, or critical workloads. Before production use, implement and validate your own durable task storage, authentication and authorization model, input validation, observability, dependency lifecycle, failure handling, and operational controls.
 
 The sample focuses on the collaboration boundary rather than framework internals. The two agents do not share prompts, tools, state, or source code. They collaborate through an AgentCard, task lifecycle events, a structured request for missing input, and named artifacts.
 
@@ -97,9 +102,9 @@ See [`agentcore/README.md`](agentcore/README.md) for account-free templates and 
 uv run python -m unittest discover -s tests -v
 ```
 
-## Optional event-catalog example
+## Optional sample catalog
 
-The curated event catalog is an optional extension that demonstrates tool design over static data. It uses a public, unofficial source snapshot with paraphrased summaries. Verify any event details in the relevant official catalog before using them for scheduling.
+The sample catalog is synthetic example data for demonstrating a static tool call. It is not a live service, a recommendation engine, or an event schedule.
 
 ## Security
 
