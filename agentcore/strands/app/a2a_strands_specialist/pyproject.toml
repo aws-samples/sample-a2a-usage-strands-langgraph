@@ -1,18 +1,18 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling==1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
 name = "a2a-strands-specialist"
 version = "0.1.0"
 description = "Account-free Strands A2A specialist template for AgentCore Runtime."
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.15"
 dependencies = [
-  "a2a-sdk[all]>=0.3.0,<0.4.0",
-  "aws-opentelemetry-distro>=0.18.0",
-  "bedrock-agentcore[a2a,strands-agents]>=1.18.1",
-  "botocore[crt]>=1.35.0",
-  "strands-agents>=1.57.0",
+  "a2a-sdk[all]==0.3.26",
+  "aws-opentelemetry-distro==0.22.0",
+  "bedrock-agentcore[a2a,strands-agents]==1.25.3",
+  "botocore[crt]==1.43.124",
+  "strands-agents==1.64.0",
 ]
 
 [tool.hatch.build.targets.wheel]
