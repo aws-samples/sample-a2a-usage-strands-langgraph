@@ -1,7 +1,5 @@
 # Cross-framework agent collaboration with A2A
 
-# Cross-framework agent collaboration with A2A
-
 A reusable reference pattern for connecting a **LangGraph coordinator** to a **Strands specialist** through the [Agent2Agent (A2A) protocol](https://a2a-protocol.org/).
 
 > [!WARNING]
